@@ -15,10 +15,10 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.icons.Icons
-import androidx.compose.material3.icons.filled.Edit
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PostCard(
     post: PostEntity,
@@ -33,7 +33,7 @@ fun PostCard(
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             AsyncImage(
-                model = post.imageUrl,
+                model = post.url, // Using post.url or add imageUrl to PostEntity
                 contentDescription = "Post image",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -53,11 +53,12 @@ fun PostCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 FlowRow(
-                    mainAxisSpacing = 4.dp,
-                    crossAxisSpacing = 4.dp,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
                     modifier = Modifier.weight(1f)
                 ) {
-                    post.tags?.split(",")?.filter { it.isNotBlank() }?.forEach { tag ->
+                    val tagsList = post.tags ?: emptyList()
+                    tagsList.forEach { tag ->
                         AssistChip(
                             onClick = { },
                             label = { Text(tag.trim()) }

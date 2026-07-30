@@ -22,11 +22,10 @@ import com.savevault.instabookmark.ui.components.PostCard
 import com.savevault.instabookmark.ui.components.SearchBar
 import com.savevault.instabookmark.ui.components.TagFilterChips
 import com.savevault.instabookmark.ui.components.TagEditorDialog
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardScreen(viewModel: MainViewModel = viewModel()) {
+fun DashboardScreen(viewModel: MainViewModel) {
     val posts = viewModel.filteredPosts.collectAsState(initial = emptyList())
     val allTags = viewModel.allTags.collectAsState(initial = emptySet())
     val selectedTags = viewModel.selectedTags.collectAsState()
@@ -38,7 +37,7 @@ fun DashboardScreen(viewModel: MainViewModel = viewModel()) {
         topBar = {
             SearchBar(
                 query = searchQuery.value,
-                onQueryChange = { viewModel.onSearchQueryChanged(it) }
+                onQueryChanged = { viewModel.setSearchQuery(it) }
             )
         }
     ) { padding ->

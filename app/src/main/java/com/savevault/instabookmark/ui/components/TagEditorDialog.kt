@@ -24,7 +24,7 @@ fun TagEditorDialog(
     onSave: (String) -> Unit
 ) {
     if (post == null) return
-    val tagsState = remember { mutableStateOf(post.tags ?: "") }
+    val tagsState = remember { mutableStateOf(post.tags.joinToString(", ")) }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(text = "Edit Tags") },
@@ -53,9 +53,6 @@ fun TagEditorDialog(
             Button(onClick = onDismiss) {
                 Text("Cancel")
             }
-        },
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
-        containerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant,
-        contentPadding = PaddingValues(16.dp)
+        }
     )
 }
