@@ -17,12 +17,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Delete
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PostCard(
     post: PostEntity,
-    onTagEdit: (PostEntity) -> Unit
+    onTagEdit: (PostEntity) -> Unit,
+    onDelete: (PostEntity) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -69,6 +71,13 @@ fun PostCard(
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = "Edit tags"
+                    )
+                }
+                IconButton(onClick = { onDelete(post) }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete post",
+                        tint = MaterialTheme.colorScheme.error
                     )
                 }
             }

@@ -33,6 +33,8 @@ public final class PostDao_Impl implements PostDao {
 
   private final EntityInsertionAdapter<PostEntity> __insertionAdapterOfPostEntity;
 
+  private final EntityDeletionOrUpdateAdapter<PostEntity> __deletionAdapterOfPostEntity;
+
   private final EntityDeletionOrUpdateAdapter<PostEntity> __updateAdapterOfPostEntity;
 
   public PostDao_Impl(@NonNull final RoomDatabase __db) {
@@ -68,6 +70,19 @@ public final class PostDao_Impl implements PostDao {
         } else {
           statement.bindString(5, entity.getTagsJson());
         }
+      }
+    };
+    this.__deletionAdapterOfPostEntity = new EntityDeletionOrUpdateAdapter<PostEntity>(__db) {
+      @Override
+      @NonNull
+      protected String createQuery() {
+        return "DELETE FROM `posts` WHERE `id` = ?";
+      }
+
+      @Override
+      protected void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final PostEntity entity) {
+        statement.bindLong(1, entity.getId());
       }
     };
     this.__updateAdapterOfPostEntity = new EntityDeletionOrUpdateAdapter<PostEntity>(__db) {
@@ -117,6 +132,24 @@ public final class PostDao_Impl implements PostDao {
           final Long _result = __insertionAdapterOfPostEntity.insertAndReturnId(post);
           __db.setTransactionSuccessful();
           return _result;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object delete(final PostEntity post, final Continuation<? super Unit> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __deletionAdapterOfPostEntity.handle(post);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
         } finally {
           __db.endTransaction();
         }

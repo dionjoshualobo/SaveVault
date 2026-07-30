@@ -99,4 +99,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (current.contains(tag)) current.remove(tag) else current.add(tag)
         _selectedTags.value = current
     }
+
+    fun deletePost(post: PostEntity) {
+        viewModelScope.launch {
+            postDao.delete(post)
+        }
+    }
 }

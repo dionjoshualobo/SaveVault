@@ -23,4 +23,7 @@ interface PostDao {
 
     @Query("SELECT * FROM posts WHERE url LIKE '%' || :query || '%' OR caption LIKE '%' || :query || '%' OR author LIKE '%' || :query || '%' OR tagsJson LIKE '%' || :query || '%' ORDER BY id DESC")
     fun searchPosts(query: String): Flow<List<PostEntity>>
+
+    @androidx.room.Delete
+    suspend fun delete(post: PostEntity)
 }

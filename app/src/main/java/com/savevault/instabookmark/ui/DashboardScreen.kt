@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
@@ -22,6 +23,9 @@ import com.savevault.instabookmark.ui.components.PostCard
 import com.savevault.instabookmark.ui.components.SearchBar
 import com.savevault.instabookmark.ui.components.TagFilterChips
 import com.savevault.instabookmark.ui.components.TagEditorDialog
+import com.savevault.instabookmark.ui.components.AddPostDialog
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,6 +36,7 @@ fun DashboardScreen(viewModel: MainViewModel) {
     val searchQuery = viewModel.searchQuery.collectAsState()
 
     val (editingPost, setEditingPost) = remember { mutableStateOf<PostEntity?>(null) }
+    val (showAddDialog, setShowAddDialog) = remember { mutableStateOf(false) }
     
     Scaffold(
         topBar = {
@@ -39,6 +44,11 @@ fun DashboardScreen(viewModel: MainViewModel) {
                 query = searchQuery.value,
                 onQueryChanged = { viewModel.setSearchQuery(it) }
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { setShowAddDialog(true) }) {
+                Icon(Icons.Default.Add, contentDescription = "Add Post")
+            }
         }
     ) { padding ->
         Column(modifier = Modifier
@@ -55,10 +65,24 @@ fun DashboardScreen(viewModel: MainViewModel) {
                 Spacer(modifier = Modifier.height(8.dp))
             }
             // Posts list
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(posts.value) { post ->
-                    PostCard(post = post, onTagEdit = { setEditingPost(it) })
-                    Spacer(modifier = Modifier.height(8.dp))
+            if (posts.value.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = "No posts found. Tap + to add one or share from Instagram.",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            } else {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(posts.value) { post ->
+                        PostCard(
+                            post = post, 
+                            onTagEdit = { setEditingPost(it) },
+                            onDelete = { viewModel.deletePost(it) }
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
             }
         }
@@ -70,6 +94,15 @@ fun DashboardScreen(viewModel: MainViewModel) {
                     val tags = tagsString.split(",").map { it.trim() }.filter { it.isNotEmpty() }
                     viewModel.addTags(editingPost.id, tags)
                     setEditingPost(null)
+                }
+            )
+        }
+        if (showAddDialog) {
+            AddPostDialog(
+                onDismiss = { setShowAddDialog(false) },
+                onAdd = { url ->
+                    viewModel.savePostFromUrl(url)
+                    setShowAddDialog(false)
                 }
             )
         }
