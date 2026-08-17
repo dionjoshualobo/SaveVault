@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [PostEntity::class], version = 1, exportSchema = false)
+@Database(entities = [PostEntity::class], version = 2, exportSchema = false)
 @TypeConverters(TagsConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao

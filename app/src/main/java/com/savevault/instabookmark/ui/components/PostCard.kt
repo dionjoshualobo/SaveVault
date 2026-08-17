@@ -35,7 +35,7 @@ fun PostCard(
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             AsyncImage(
-                model = post.url, // Using post.url or add imageUrl to PostEntity
+                model = post.thumbnailUrl, // Use the correct image url
                 contentDescription = "Post image",
                 modifier = Modifier
                     .fillMaxWidth()

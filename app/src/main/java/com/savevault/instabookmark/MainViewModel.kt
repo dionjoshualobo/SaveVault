@@ -71,12 +71,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     url = url,
                     caption = metadata.title,
                     author = metadata.author_name,
+                    thumbnailUrl = metadata.thumbnail_url,
                     tagsJson = "[]"
                 )
                 postDao.insert(post)
             } catch (e: Exception) {
                 // fallback: store only URL
-                val post = PostEntity(url = url, caption = null, author = null, tagsJson = "[]")
+                val post = PostEntity(url = url, caption = null, author = null, thumbnailUrl = null, tagsJson = "[]")
                 postDao.insert(post)
             }
         }

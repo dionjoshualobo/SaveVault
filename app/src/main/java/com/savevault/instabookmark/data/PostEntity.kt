@@ -14,6 +14,7 @@ data class PostEntity(
     val url: String,
     val caption: String?,
     val author: String?,
+    val thumbnailUrl: String?,
     val tagsJson: String = "[]"
 ) {
     val tags: List<String>
