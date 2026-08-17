@@ -32,7 +32,7 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    namespace = "com.savevault.savevault"
+    namespace = "com.savevault.instabookmark"
 }
 
 dependencies {
