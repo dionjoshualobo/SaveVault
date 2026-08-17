@@ -16,10 +16,10 @@ fun SearchBar(
     query: String,
     onQueryChanged: (String) -> Unit
 ) {
-    TextField(
+    OutlinedTextField(
         value = query,
         onValueChange = onQueryChanged,
-        placeholder = { Text("Search posts…") },
+        placeholder = { Text("Search posts…", color = androidx.compose.ui.graphics.Color.DarkGray) },
         singleLine = true,
         modifier = Modifier.fillMaxWidth(),
         trailingIcon = {
@@ -27,18 +27,20 @@ fun SearchBar(
                 IconButton(onClick = { onQueryChanged("") }) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Clear search"
+                        contentDescription = "Clear search",
+                        tint = androidx.compose.ui.graphics.Color.White
                     )
                 }
             }
         },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.onSurfaceVariant
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = androidx.compose.ui.graphics.Color.White,
+            unfocusedBorderColor = androidx.compose.ui.graphics.Color.DarkGray,
+            cursorColor = androidx.compose.ui.graphics.Color.White,
+            focusedTextColor = androidx.compose.ui.graphics.Color.White,
+            unfocusedTextColor = androidx.compose.ui.graphics.Color.LightGray
         ),
-        shape = MaterialTheme.shapes.medium,
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions(onSearch = { /* no op */ })
     )

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.savevault.savevault.app-mergeDebugResources-45:/values-vi/values-vi.xml",
+            "outputFile": "com.savevault.instabookmark.app-mergeDebugResources-45:/values-vi/values-vi.xml",
             "map": [
                 {
                     "source": "/home/dion/.gradle/caches/9.6.1/transforms/e1ee04515f8668152770f88e330ee3d9/transformed/jetified-ui-release/res/values-vi/values-vi.xml",

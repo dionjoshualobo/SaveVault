@@ -39,14 +39,15 @@ fun DashboardScreen(viewModel: MainViewModel) {
     val (showAddDialog, setShowAddDialog) = remember { mutableStateOf(false) }
     
     Scaffold(
-        topBar = {
-            SearchBar(
-                query = searchQuery.value,
-                onQueryChanged = { viewModel.setSearchQuery(it) }
-            )
-        },
+        containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = {
-            FloatingActionButton(onClick = { setShowAddDialog(true) }) {
+            FloatingActionButton(
+                onClick = { setShowAddDialog(true) },
+                containerColor = Color.White,
+                contentColor = Color.Black,
+                shape = androidx.compose.foundation.shape.CircleShape,
+                elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp)
+            ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Post")
             }
         }
@@ -54,7 +55,25 @@ fun DashboardScreen(viewModel: MainViewModel) {
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(padding)
-            .padding(8.dp)) {
+            .padding(16.dp)) {
+            
+            // Giant minimal header
+            Text(
+                text = "VAULT.",
+                style = MaterialTheme.typography.displayLarge.copy(
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Black,
+                    color = Color.White
+                )
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Search bar
+            SearchBar(
+                query = searchQuery.value,
+                onQueryChanged = { viewModel.setSearchQuery(it) }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Tag filter chips
             if (allTags.value.isNotEmpty()) {
                 TagFilterChips(
@@ -62,7 +81,7 @@ fun DashboardScreen(viewModel: MainViewModel) {
                     selectedTags = selectedTags.value,
                     onTagToggle = { viewModel.toggleTagSelection(it) }
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
             }
             // Posts list
             if (posts.value.isEmpty()) {
@@ -70,7 +89,7 @@ fun DashboardScreen(viewModel: MainViewModel) {
                     Text(
                         text = "No posts found. Tap + to add one or share from Instagram.",
                         style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = Color.DarkGray
                     )
                 }
             } else {

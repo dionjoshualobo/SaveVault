@@ -43,7 +43,7 @@
 28-->/home/dion/SaveVault/app/src/main/AndroidManifest.xml:12:9-47
 29        <activity
 29-->/home/dion/SaveVault/app/src/main/AndroidManifest.xml:13:9-25:20
-30            android:name="com.savevault.savevault.MainActivity"
+30            android:name="com.savevault.instabookmark.MainActivity"
 30-->/home/dion/SaveVault/app/src/main/AndroidManifest.xml:13:19-47
 31            android:exported="true" >
 31-->/home/dion/SaveVault/app/src/main/AndroidManifest.xml:14:13-36

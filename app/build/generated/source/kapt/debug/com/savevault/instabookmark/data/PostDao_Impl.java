@@ -43,7 +43,7 @@ public final class PostDao_Impl implements PostDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR REPLACE INTO `posts` (`id`,`url`,`caption`,`author`,`tagsJson`) VALUES (nullif(?, 0),?,?,?,?)";
+        return "INSERT OR REPLACE INTO `posts` (`id`,`url`,`caption`,`author`,`thumbnailUrl`,`tagsJson`) VALUES (nullif(?, 0),?,?,?,?,?)";
       }
 
       @Override
@@ -65,10 +65,15 @@ public final class PostDao_Impl implements PostDao {
         } else {
           statement.bindString(4, entity.getAuthor());
         }
-        if (entity.getTagsJson() == null) {
+        if (entity.getThumbnailUrl() == null) {
           statement.bindNull(5);
         } else {
-          statement.bindString(5, entity.getTagsJson());
+          statement.bindString(5, entity.getThumbnailUrl());
+        }
+        if (entity.getTagsJson() == null) {
+          statement.bindNull(6);
+        } else {
+          statement.bindString(6, entity.getTagsJson());
         }
       }
     };
@@ -89,7 +94,7 @@ public final class PostDao_Impl implements PostDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE OR ABORT `posts` SET `id` = ?,`url` = ?,`caption` = ?,`author` = ?,`tagsJson` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `posts` SET `id` = ?,`url` = ?,`caption` = ?,`author` = ?,`thumbnailUrl` = ?,`tagsJson` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -111,12 +116,17 @@ public final class PostDao_Impl implements PostDao {
         } else {
           statement.bindString(4, entity.getAuthor());
         }
-        if (entity.getTagsJson() == null) {
+        if (entity.getThumbnailUrl() == null) {
           statement.bindNull(5);
         } else {
-          statement.bindString(5, entity.getTagsJson());
+          statement.bindString(5, entity.getThumbnailUrl());
         }
-        statement.bindLong(6, entity.getId());
+        if (entity.getTagsJson() == null) {
+          statement.bindNull(6);
+        } else {
+          statement.bindString(6, entity.getTagsJson());
+        }
+        statement.bindLong(7, entity.getId());
       }
     };
   }
@@ -189,6 +199,7 @@ public final class PostDao_Impl implements PostDao {
           final int _cursorIndexOfUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "url");
           final int _cursorIndexOfCaption = CursorUtil.getColumnIndexOrThrow(_cursor, "caption");
           final int _cursorIndexOfAuthor = CursorUtil.getColumnIndexOrThrow(_cursor, "author");
+          final int _cursorIndexOfThumbnailUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "thumbnailUrl");
           final int _cursorIndexOfTagsJson = CursorUtil.getColumnIndexOrThrow(_cursor, "tagsJson");
           final List<PostEntity> _result = new ArrayList<PostEntity>(_cursor.getCount());
           while (_cursor.moveToNext()) {
@@ -213,13 +224,19 @@ public final class PostDao_Impl implements PostDao {
             } else {
               _tmpAuthor = _cursor.getString(_cursorIndexOfAuthor);
             }
+            final String _tmpThumbnailUrl;
+            if (_cursor.isNull(_cursorIndexOfThumbnailUrl)) {
+              _tmpThumbnailUrl = null;
+            } else {
+              _tmpThumbnailUrl = _cursor.getString(_cursorIndexOfThumbnailUrl);
+            }
             final String _tmpTagsJson;
             if (_cursor.isNull(_cursorIndexOfTagsJson)) {
               _tmpTagsJson = null;
             } else {
               _tmpTagsJson = _cursor.getString(_cursorIndexOfTagsJson);
             }
-            _item = new PostEntity(_tmpId,_tmpUrl,_tmpCaption,_tmpAuthor,_tmpTagsJson);
+            _item = new PostEntity(_tmpId,_tmpUrl,_tmpCaption,_tmpAuthor,_tmpThumbnailUrl,_tmpTagsJson);
             _result.add(_item);
           }
           return _result;
@@ -255,6 +272,7 @@ public final class PostDao_Impl implements PostDao {
           final int _cursorIndexOfUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "url");
           final int _cursorIndexOfCaption = CursorUtil.getColumnIndexOrThrow(_cursor, "caption");
           final int _cursorIndexOfAuthor = CursorUtil.getColumnIndexOrThrow(_cursor, "author");
+          final int _cursorIndexOfThumbnailUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "thumbnailUrl");
           final int _cursorIndexOfTagsJson = CursorUtil.getColumnIndexOrThrow(_cursor, "tagsJson");
           final List<PostEntity> _result = new ArrayList<PostEntity>(_cursor.getCount());
           while (_cursor.moveToNext()) {
@@ -279,13 +297,19 @@ public final class PostDao_Impl implements PostDao {
             } else {
               _tmpAuthor = _cursor.getString(_cursorIndexOfAuthor);
             }
+            final String _tmpThumbnailUrl;
+            if (_cursor.isNull(_cursorIndexOfThumbnailUrl)) {
+              _tmpThumbnailUrl = null;
+            } else {
+              _tmpThumbnailUrl = _cursor.getString(_cursorIndexOfThumbnailUrl);
+            }
             final String _tmpTagsJson;
             if (_cursor.isNull(_cursorIndexOfTagsJson)) {
               _tmpTagsJson = null;
             } else {
               _tmpTagsJson = _cursor.getString(_cursorIndexOfTagsJson);
             }
-            _item = new PostEntity(_tmpId,_tmpUrl,_tmpCaption,_tmpAuthor,_tmpTagsJson);
+            _item = new PostEntity(_tmpId,_tmpUrl,_tmpCaption,_tmpAuthor,_tmpThumbnailUrl,_tmpTagsJson);
             _result.add(_item);
           }
           return _result;
@@ -339,6 +363,7 @@ public final class PostDao_Impl implements PostDao {
           final int _cursorIndexOfUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "url");
           final int _cursorIndexOfCaption = CursorUtil.getColumnIndexOrThrow(_cursor, "caption");
           final int _cursorIndexOfAuthor = CursorUtil.getColumnIndexOrThrow(_cursor, "author");
+          final int _cursorIndexOfThumbnailUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "thumbnailUrl");
           final int _cursorIndexOfTagsJson = CursorUtil.getColumnIndexOrThrow(_cursor, "tagsJson");
           final List<PostEntity> _result = new ArrayList<PostEntity>(_cursor.getCount());
           while (_cursor.moveToNext()) {
@@ -363,13 +388,19 @@ public final class PostDao_Impl implements PostDao {
             } else {
               _tmpAuthor = _cursor.getString(_cursorIndexOfAuthor);
             }
+            final String _tmpThumbnailUrl;
+            if (_cursor.isNull(_cursorIndexOfThumbnailUrl)) {
+              _tmpThumbnailUrl = null;
+            } else {
+              _tmpThumbnailUrl = _cursor.getString(_cursorIndexOfThumbnailUrl);
+            }
             final String _tmpTagsJson;
             if (_cursor.isNull(_cursorIndexOfTagsJson)) {
               _tmpTagsJson = null;
             } else {
               _tmpTagsJson = _cursor.getString(_cursorIndexOfTagsJson);
             }
-            _item = new PostEntity(_tmpId,_tmpUrl,_tmpCaption,_tmpAuthor,_tmpTagsJson);
+            _item = new PostEntity(_tmpId,_tmpUrl,_tmpCaption,_tmpAuthor,_tmpThumbnailUrl,_tmpTagsJson);
             _result.add(_item);
           }
           return _result;

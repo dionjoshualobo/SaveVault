@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.savevault.savevault.app-mergeDebugResources-45:/values/values.xml",
+            "outputFile": "com.savevault.instabookmark.app-mergeDebugResources-45:/values/values.xml",
             "map": [
                 {
                     "source": "/home/dion/.gradle/caches/9.6.1/transforms/ed3583292aa8d5cc1eade86194b16452/transformed/jetified-startup-runtime-1.1.1/res/values/values.xml",

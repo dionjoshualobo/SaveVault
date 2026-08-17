@@ -103,7 +103,7 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/dion/.gradle/caches/9
 		ADDED from /home/dion/SaveVault/app/src/main/AndroidManifest.xml:7:9-35
 	android:theme
 		ADDED from /home/dion/SaveVault/app/src/main/AndroidManifest.xml:12:9-47
-activity#com.savevault.savevault.MainActivity
+activity#com.savevault.instabookmark.MainActivity
 ADDED from /home/dion/SaveVault/app/src/main/AndroidManifest.xml:13:9-25:20
 	android:exported
 		ADDED from /home/dion/SaveVault/app/src/main/AndroidManifest.xml:14:13-36

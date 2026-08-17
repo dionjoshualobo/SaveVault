@@ -1,4 +1,4 @@
-com.savevault.savevault
+com.savevault.instabookmark
 attr alpha
 attr font
 attr fontProviderAuthority

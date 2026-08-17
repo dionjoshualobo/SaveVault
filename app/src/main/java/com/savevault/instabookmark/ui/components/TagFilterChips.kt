@@ -21,11 +21,16 @@ fun TagFilterChips(
             val selected = selectedTags.contains(tag)
             AssistChip(
                 onClick = { onTagToggle(tag) },
-                label = { androidx.compose.material3.Text(tag) },
+                label = { androidx.compose.material3.Text(tag.uppercase(), fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) },
                 colors = AssistChipDefaults.assistChipColors(
-                    containerColor = if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
-                    labelColor = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = if (selected) androidx.compose.ui.graphics.Color.White else androidx.compose.ui.graphics.Color.Black,
+                    labelColor = if (selected) androidx.compose.ui.graphics.Color.Black else androidx.compose.ui.graphics.Color.White
                 ),
+                border = AssistChipDefaults.assistChipBorder(
+                    borderColor = androidx.compose.ui.graphics.Color.White,
+                    enabled = true
+                ),
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
                 modifier = Modifier
             )
             Spacer(modifier = Modifier.width(4.dp))

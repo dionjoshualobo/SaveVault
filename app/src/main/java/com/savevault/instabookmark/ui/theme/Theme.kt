@@ -5,10 +5,12 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 
 private val DarkColors = darkColorScheme(
-    primary = androidx.compose.ui.graphics.Color(0xFFBB86FC),
-    secondary = androidx.compose.ui.graphics.Color(0xFF03DAC5),
-    background = androidx.compose.ui.graphics.Color(0xFF121212),
-    surface = androidx.compose.ui.graphics.Color(0xFF1E1E1E)
+    primary = androidx.compose.ui.graphics.Color.White,
+    onPrimary = androidx.compose.ui.graphics.Color.Black,
+    secondary = androidx.compose.ui.graphics.Color.LightGray,
+    background = androidx.compose.ui.graphics.Color.Black,
+    surface = androidx.compose.ui.graphics.Color(0xFF111111),
+    onSurface = androidx.compose.ui.graphics.Color.White
 )
 
 @Composable

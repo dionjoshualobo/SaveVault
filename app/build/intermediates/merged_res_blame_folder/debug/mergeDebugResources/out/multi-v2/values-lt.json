@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.savevault.savevault.app-mergeDebugResources-45:/values-lt/values-lt.xml",
+            "outputFile": "com.savevault.instabookmark.app-mergeDebugResources-45:/values-lt/values-lt.xml",
             "map": [
                 {
                     "source": "/home/dion/.gradle/caches/9.6.1/transforms/1b15f0b86b2c16118939789467922987/transformed/core-1.13.1/res/values-lt/values-lt.xml",
