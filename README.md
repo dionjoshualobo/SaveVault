@@ -65,7 +65,7 @@ Unit tests are written for the ViewModel and Room DAO.
 ## Notes
 - The repository is **local‑only**; there is no remote origin configured. All commits stay on your machine.
 - The UI uses a dark Material 3 theme with custom colors and glass‑morphism surfaces for a premium look.
-- If you modify the OEmbed endpoint or add a fallback scraper, update `network/InstagramOEmbedService.kt` accordingly.
+- The app uses the free **Microlink.io** API (`network/MetadataService.kt`) to extract Instagram post metadata (title, author, thumbnail) without needing a Facebook Developer account or Access Token.
 
 ---
 *Happy coding!*

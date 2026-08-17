@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.savevault.instabookmark.data.AppDatabase
 import com.savevault.instabookmark.data.PostEntity
 import com.savevault.instabookmark.data.TagsConverter
-import com.savevault.instabookmark.network.InstagramOEmbedService
+import com.savevault.instabookmark.network.MetadataService
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
@@ -58,23 +58,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://graph.facebook.com") // Instagram OEmbed endpoint base
+        .baseUrl("https://api.microlink.io") // Microlink API endpoint base
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-    private val oembedService = retrofit.create(InstagramOEmbedService::class.java)
-
-    // TODO: Replace with your actual Meta App Access Token (AppID|ClientToken)
-    private val oembedAccessToken = "YOUR_APP_ID|YOUR_CLIENT_TOKEN"
+    private val metadataService = retrofit.create(MetadataService::class.java)
 
     fun savePostFromUrl(url: String) {
         viewModelScope.launch {
             try {
-                val metadata = oembedService.fetchMetadata(url, oembedAccessToken)
+                val metadata = metadataService.fetchMetadata(url)
                 val post = PostEntity(
                     url = url,
-                    caption = metadata.title,
-                    author = metadata.author_name,
-                    thumbnailUrl = metadata.thumbnail_url,
+                    caption = metadata.data?.title,
+                    author = metadata.data?.author,
+                    thumbnailUrl = metadata.data?.image?.url,
                     tagsJson = "[]"
                 )
                 postDao.insert(post)
