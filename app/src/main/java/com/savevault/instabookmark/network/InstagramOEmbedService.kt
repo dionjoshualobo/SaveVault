@@ -5,7 +5,10 @@ import retrofit2.http.Query
 
 interface InstagramOEmbedService {
     @GET("/instagram_oembed")
-    suspend fun fetchMetadata(@Query("url") postUrl: String): OEmbedResponse
+    suspend fun fetchMetadata(
+        @Query("url") postUrl: String,
+        @Query("access_token") accessToken: String
+    ): OEmbedResponse
 }
 
 data class OEmbedResponse(

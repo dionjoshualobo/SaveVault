@@ -63,10 +63,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         .build()
     private val oembedService = retrofit.create(InstagramOEmbedService::class.java)
 
+    // TODO: Replace with your actual Meta App Access Token (AppID|ClientToken)
+    private val oembedAccessToken = "YOUR_APP_ID|YOUR_CLIENT_TOKEN"
+
     fun savePostFromUrl(url: String) {
         viewModelScope.launch {
             try {
-                val metadata = oembedService.fetchMetadata(url)
+                val metadata = oembedService.fetchMetadata(url, oembedAccessToken)
                 val post = PostEntity(
                     url = url,
                     caption = metadata.title,
