@@ -64,19 +64,19 @@ fun DashboardScreen(viewModel: MainViewModel) {
             // Giant minimal header
             Text(
                 text = "VAULT.",
-                style = MaterialTheme.typography.displayLarge.copy(
+                style = MaterialTheme.typography.displayMedium.copy(
                     fontWeight = androidx.compose.ui.text.font.FontWeight.Black,
                     color = Color.White
                 )
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Search bar
             SearchBar(
                 query = searchQuery.value,
                 onQueryChanged = { viewModel.setSearchQuery(it) }
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Tag filter chips
             if (allTags.value.isNotEmpty()) {
