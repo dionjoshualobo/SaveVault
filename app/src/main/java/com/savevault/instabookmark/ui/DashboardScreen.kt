@@ -127,8 +127,8 @@ fun DashboardScreen(viewModel: MainViewModel) {
         if (showAddDialog) {
             AddPostDialog(
                 onDismiss = { setShowAddDialog(false) },
-                onAdd = { url ->
-                    viewModel.savePostFromUrl(url)
+                onAdd = { url, tags ->
+                    viewModel.savePostWithTags(url, tags)
                     setShowAddDialog(false)
                 }
             )

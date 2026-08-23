@@ -3,6 +3,8 @@ package com.savevault.instabookmark.ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -16,12 +18,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AddPostDialog(
     onDismiss: () -> Unit,
-    onAdd: (String) -> Unit
+    onAdd: (String, List<String>) -> Unit
 ) {
     val urlState = remember { mutableStateOf("") }
+    val tagsState = remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add Instagram Post URL") },
+        title = { Text("Add Instagram Post") },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 TextField(
@@ -31,12 +34,21 @@ fun AddPostDialog(
                     placeholder = { Text("https://instagram.com/p/...") },
                     modifier = Modifier.fillMaxWidth()
                 )
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    value = tagsState.value,
+                    onValueChange = { tagsState.value = it },
+                    label = { Text("Tags (comma separated)") },
+                    placeholder = { Text("work,inspiration") },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         },
         confirmButton = {
             Button(
                 onClick = {
-                    onAdd(urlState.value)
+                    val tags = tagsState.value.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+                    onAdd(urlState.value, tags)
                     onDismiss()
                 }
             ) { Text("Add") }

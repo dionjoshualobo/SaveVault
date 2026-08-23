@@ -83,6 +83,28 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun savePostWithTags(url: String, tags: List<String>) {
+        viewModelScope.launch {
+            try {
+                val metadata = metadataService.fetchMetadata(url)
+                val tagsJson = TagsConverter.toJson(tags)
+                val post = PostEntity(
+                    url = url,
+                    caption = metadata.data?.title,
+                    author = metadata.data?.author,
+                    thumbnailUrl = metadata.data?.image?.url,
+                    tagsJson = tagsJson
+                )
+                postDao.insert(post)
+            } catch (e: Exception) {
+                // fallback: store only URL and tags
+                val tagsJson = TagsConverter.toJson(tags)
+                val post = PostEntity(url = url, caption = null, author = null, thumbnailUrl = null, tagsJson = tagsJson)
+                postDao.insert(post)
+            }
+        }
+    }
+
     fun addTags(postId: Long, newTags: List<String>) {
         viewModelScope.launch {
             val post = _allPosts.value.find { it.id == postId } ?: return@launch
