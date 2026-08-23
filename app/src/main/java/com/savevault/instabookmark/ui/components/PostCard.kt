@@ -2,6 +2,7 @@ package com.savevault.instabookmark.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,12 +25,14 @@ import androidx.compose.material.icons.filled.Delete
 fun PostCard(
     post: PostEntity,
     onTagEdit: (PostEntity) -> Unit,
-    onDelete: (PostEntity) -> Unit
+    onDelete: (PostEntity) -> Unit,
+    onPostClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clickable { onPostClick(post.url) },
         shape = RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.Black),
         border = androidx.compose.foundation.BorderStroke(1.dp, androidx.compose.ui.graphics.Color.White),

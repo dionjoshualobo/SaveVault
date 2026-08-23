@@ -17,8 +17,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
 import com.savevault.instabookmark.MainViewModel
 import com.savevault.instabookmark.data.PostEntity
+import android.content.Intent
+import android.net.Uri
 import com.savevault.instabookmark.ui.components.PostCard
 import com.savevault.instabookmark.ui.components.SearchBar
 import com.savevault.instabookmark.ui.components.TagFilterChips
@@ -30,6 +33,7 @@ import androidx.compose.material.icons.filled.Add
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(viewModel: MainViewModel) {
+    val context = LocalContext.current
     val posts = viewModel.filteredPosts.collectAsState(initial = emptyList())
     val allTags = viewModel.allTags.collectAsState(initial = emptySet())
     val selectedTags = viewModel.selectedTags.collectAsState()
@@ -98,7 +102,11 @@ fun DashboardScreen(viewModel: MainViewModel) {
                         PostCard(
                             post = post, 
                             onTagEdit = { setEditingPost(it) },
-                            onDelete = { viewModel.deletePost(it) }
+                            onDelete = { viewModel.deletePost(it) },
+                            onPostClick = { url ->
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                context.startActivity(intent)
+                            }
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                     }
